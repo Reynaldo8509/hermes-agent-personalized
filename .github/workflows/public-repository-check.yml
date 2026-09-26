@@ -1,0 +1,26 @@
+name: Public repository check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-repository-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publication:
+    name: Validate public README and artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 1
+      - name: Check publication files
+        run: python3 scripts/check-publication.py

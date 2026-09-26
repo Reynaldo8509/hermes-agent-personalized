@@ -18,6 +18,7 @@ La ilustración resume visualmente el ecosistema. El diagrama Mermaid y las secc
 - Plugins propios para Alexa, presencia en red, enrutamiento, protecciones de herramientas, Hermy HQ, QBitTorrent y servicios personalizados.
 - Las dos modificaciones locales activas del gateway y su prueba asociada.
 - Ejemplos de configuración y unidades de servicio, revisados para publicar sin credenciales.
+- Una comprobación de GitHub Actions adaptada a este repositorio: valida imágenes enlazadas y detecta archivos de entorno, bases de datos, logs y cachés de runtime.
 - Integración conceptual con Hermy HQ y Home Assistant; ADB para control de Fire TV se documenta y se comparte en el repositorio de Home Assistant.
 
 ## Arquitectura
