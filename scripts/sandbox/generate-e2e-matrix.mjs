@@ -415,6 +415,10 @@ async function main() {
       artifacts: { type: 'string' },
     },
   });
+  if (values.format === 'results' && !values.tags.trim()) {
+    process.stdout.write('Result chart unavailable: release tag selection failed in the Pick release tags job.\n');
+    return;
+  }
   if (values.format === 'results') {
     const jobs = (await readStdin()).split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
     const annotations = /** @type {TagAnnotation[]} */ (JSON.parse(values.tags));
