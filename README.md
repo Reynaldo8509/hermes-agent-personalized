@@ -1,8 +1,8 @@
 # Hermes Agent Personalizado
 
-![Imagen principal oficial de Hermes Agent publicada por Nous Research](docs/assets/hermes-official-hero.webp)
+![Banner amarillo oficial de Hermes Agent](docs/assets/hermes-agent-banner.png)
 
-<sub>Imagen del [sitio oficial de Hermes Agent](https://hermes-agent.nousresearch.com/). La marca pertenece a Nous Research.</sub>
+<sub>Banner del proyecto Hermes Agent, distribuido con el código fuente de [Nous Research](https://github.com/NousResearch/hermes-agent). La marca y el diseño pertenecen a sus titulares.</sub>
 
 Repositorio público del despliegue de Hermes Agent que se ejecuta en un VPS, publicado desde el estado activo del servidor. Contiene el código fuente completo versionado de Hermes Agent, las personalizaciones locales activas, plugins propios y ejemplos portables de configuración e instalación.
 
