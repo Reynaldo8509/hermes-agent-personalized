@@ -1,0 +1,12 @@
+name: local-knowledge
+version: 1.1.0
+description: Memoria local ligera de hechos y correcciones operativas
+entrypoint: __init__.py
+provides_hooks:
+  - pre_gateway_dispatch
+  - pre_llm_call
+provides_tools:
+  - knowledge_lookup
+provides_commands:
+  - remember
+  - guarda_esto

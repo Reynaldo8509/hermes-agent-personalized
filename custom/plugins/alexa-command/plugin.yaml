@@ -1,0 +1,8 @@
+name: alexa-command
+version: 1.0.0
+description: Comando Telegram seguro para anunciar mensajes mediante Alexa
+entrypoint: __init__.py
+provides_commands:
+  - alexa
+  - noticias_ecuador_hoy
+provides_hooks: []

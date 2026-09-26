@@ -1,0 +1,503 @@
+model:
+  default: qwen3-8b-local
+  provider: qwen-local-tailscale
+  base_url: http://192.0.2.10:8088/v1
+  streaming: false
+homeassistant:
+  allow_sensitive_services: true
+providers:
+  groq-cloud:
+    name: Groq Cloud
+    base_url: https://api.groq.com/openai/v1
+    transport: openai_chat
+    extra_headers:
+      User-Agent: Hermes-VPS/1.0
+    models:
+      openai/gpt-oss-20b:
+        context_length: 131072
+  cerebras-cloud:
+    name: Cerebras Cloud
+    base_url: https://api.cerebras.ai/v1
+    transport: openai_chat
+    transport: openai_chat
+    models:
+      deepseek-v4.1-flash:free:
+        context_length: 1000000
+  freellmapi:
+    name: FreeLLMAPI Local
+    base_url: http://192.0.2.10:3001/v1
+    transport: openai_chat
+    models:
+      auto: {}
+fallback_providers:
+  - provider: custom:freellmapi
+    model: auto
+  - provider: custom:cerebras-cloud
+    model: gpt-oss-120b
+  - provider: openai-codex
+    model: gpt-5.6-luna
+    base_url: https://chatgpt.com/backend-api/codex
+database:
+  journal_mode: wal
+runtime:
+  nofile_soft_limit: 4096
+agent:
+  max_turns: 120
+  service_tier: ''
+  fast_auto_seconds: 60
+  verbose: false
+  reasoning_effort: low
+  system_prompt: 'Eres Hermes, el asistente operativo de Reynaldo. Responde en español,
+    con precisión y de forma concisa: entrega primero la conclusión y después solo
+    los datos o pasos indispensables; usa como máximo cinco viñetas salvo que se pida
+    detalle o la seguridad exija contexto adicional.
+
+
+    Usa una herramienta únicamente cuando pueda aportar evidencia actual, comprobar
+    el estado real de un agente, dispositivo o servicio, o ejecutar una acción solicitada
+    y autorizada. Para explicaciones, orientación general o conocimiento estable,
+    responde directamente sin herramientas. Antes de afirmar un estado operativo,
+    usa la herramienta específica disponible; nunca inventes resultados, herramientas,
+    rutas, fuentes ni acciones ejecutadas. Tras una herramienta, informa el resultado
+    verificado y el siguiente paso mínimo.
+
+
+    Para ciberseguridad, trabaja con mentalidad defensiva: respeta alcance y autorización,
+    prioriza inventario, evidencia, impacto, mitigación y validación. Distingue claramente
+    entre HECHOS CONFIRMADOS, INFERENCIAS y PENDIENTES. No propongas explotación,
+    acceso a credenciales ni cambios destructivos fuera de una solicitud explícita
+    y delimitada.
+
+
+    Para consultar el estado de Max u otro agente de Hermy HQ, usa hermy_agent_status.
+    Para delegar una tarea no física que requiere coordinación, usa hermy_delegate_to_max;
+    no afirmes que una tarea fue delegada hasta recibir su resultado. Respeta los
+    límites de aprobación y las políticas de cada herramienta.
+
+    POLÍTICA DE SELECCIÓN DE HERRAMIENTAS PARA QWEN: 1) Decide primero si la solicitud
+    es informativa, operativa o una acción autorizada. 2) Si es informativa y no necesita
+    datos actuales, responde sin herramientas. 3) Si necesita estado, evidencia o
+    una acción, usa la herramienta Hermes más específica y directa que esté visible.
+    No sustituyas una herramienta específica por terminal, curl, navegador u otra
+    genérica. 4) Si la herramienta adecuada no está visible, llama primero a tool_search
+    con 1-2 consultas cortas en español o inglés. Si aparece el nombre exacto, usa
+    tool_describe y luego tool_call; no inventes nombres, parámetros ni resultados.
+    5) Para Hermy HQ: estado de un agente = hermy_agent_status; delegación = hermy_delegate_to_max.
+    Para estado de Hermes = hermes_runtime_status. 6) Una consulta de estado es de
+    solo lectura; una modificación, envío, reinicio, apagado, borrado o acceso sensible
+    exige la herramienta adecuada y autorización. 7) Después de cada herramienta,
+    basa la respuesta únicamente en su resultado y marca HECHO CONFIRMADO, INFERENCIA
+    o PENDIENTE cuando corresponda.
+
+    '
+  personalities: {}
+terminal:
+  backend: local
+  cwd: .
+  timeout: 180
+  home_mode: auto
+  container_cpu: 1
+  container_memory: 5120
+  container_disk: 51200
+  container_persistent: true
+  docker_mount_cwd_to_workspace: false
+  lifetime_seconds: 300
+browser:
+  inactivity_timeout: 120
+  use_real_profile: true
+  extension_control:
+    enabled: false
+tool_loop_guardrails:
+  warnings_enabled: true
+  hard_stop_enabled: true
+  non_interactive_hard_stop_enabled: true
+  warn_after:
+    exact_failure: 2
+    same_tool_failure: 3
+    idempotent_no_progress: 2
+  hard_stop_after:
+    exact_failure: 5
+    same_tool_failure: 8
+    idempotent_no_progress: 5
+compression:
+  enabled: true
+  checkpoint_required: false
+  progress_notices: false
+  threshold: 0.5
+  target_ratio: 0.2
+  protect_last_n: 20
+  min_tail_user_messages: 1
+  max_attempts: 3
+  proactive_prune_min_result_chars: 8000
+  hygiene_max_turn_hold_seconds: 10
+  protect_first_n: 3
+  codex_gpt55_autoraise: true
+  codex_app_server_auto: native
+  codex_responses_native: false
+  idle_compact_after_seconds: 0
+prompt_caching:
+  cache_ttl: 5m
+auxiliary:
+  title_generation:
+    enabled: false
+    reasoning_effort: low
+  background_review:
+    enabled: true
+    provider: freellmapi
+    model: auto
+    reasoning_effort: low
+display:
+  compact: false
+  personality: technical
+  busy_input_mode: interrupt
+  bell_on_complete: false
+  bell_on_prompt: false
+  show_reasoning: false
+  background_process_notifications: concise
+  streaming: true
+  skin: default
+  interim_assistant_messages: true
+  tool_progress: all
+  cleanup_progress: false
+  long_running_notifications: true
+  busy_ack_detail: true
+  in_app_tips: false
+  in_app_tours: false
+stt:
+  enabled: true
+  language: en
+  local:
+    model: base
+  openai:
+    model: whisper-1
+    language: ''
+voice:
+  auto_tts: false
+wake_word:
+  enabled: false
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+  memory_char_limit: 2200
+  user_char_limit: 1375
+  nudge_interval: 10
+  provider: honcho
+delegation:
+  max_iterations: 250
+skills:
+  creation_nudge_interval: 15
+  disabled:
+    - biblical-context
+    - nova-youtube-agent
+    - youtube-content
+    - competitor-news-monitor
+    - teams-meeting-pipeline
+timezone: America/Guayaquil
+approvals:
+  destructive_slash_confirm: false
+plugins:
+  enabled:
+    - alexa-command
+    - codex-runner
+    - composio-on-demand-router
+    - dashboard_auth/basic
+    - hermes-telemetry
+    - hermy-hq-agent
+    - intent-router
+    - display_one-affection
+    - display_one-node-router
+    - local-knowledge
+    - network-presence
+    - printer-control
+    - qbittorrent-control
+    - raspberry-node-router
+    - research-gate
+    - tmdb-catalog
+    - tool-call-guardrails
+    - toshiba-node-router
+    - device_two-node-router
+  disabled: []
+  entries:
+    hermes-telemetry:
+      allow_tool_override: false
+    intent-router:
+      allow_tool_override: false
+    tool-call-guardrails:
+      allow_tool_override: false
+    local-knowledge:
+      allow_tool_override: false
+    research-gate:
+      allow_tool_override: false
+    hermy-hq-agent:
+      allow_tool_override: false
+    printer-control:
+      allow_tool_override: false
+    qbittorrent-control:
+      allow_tool_override: false
+    alexa-command:
+      allow_tool_override: false
+    codex-runner:
+      allow_tool_override: false
+    composio-on-demand-router:
+      allow_tool_override: false
+      mcp_allowlist:
+        - composio-full-access
+    tmdb-catalog:
+      allow_tool_override: false
+kanban:
+  review_dispatch: true
+code_execution:
+  timeout: 300
+  max_tool_calls: 50
+tools:
+  tool_search:
+    enabled: auto
+    threshold_pct: 3
+    search_default_limit: 3
+    max_search_limit: 6
+    listing: auto
+network:
+  force_ipv4: true
+streaming:
+  enabled: false
+onboarding:
+  seen:
+    busy_input_prompt: true
+telemetry:
+  shared_metrics:
+    enabled: false
+    send: false
+updates:
+  check: true
+  pre_update_backup: false
+  backup_keep: 5
+  non_interactive_local_changes: stash
+_config_version: 44
+custom_providers:
+  - name: qwen-local-tailscale
+    base_url: http://192.0.2.10:8088/v1
+    models:
+      qwen3-8b-local: {}
+    models:
+      deepseek-v4.1-flash:free:
+        context_length: 1000000
+group_sessions_per_user: true
+platform_toolsets:
+  cli:
+    - browser
+    - clarify
+    - code_execution
+    - composio-on-demand
+    - computer_use
+    - connections
+    - cronjob
+    - delegation
+    - file
+    - hermy_hq
+    - homeassistant
+    - image_gen
+    - memory
+    - network_presence
+    - session_search
+    - skills
+    - terminal
+    - todo
+    - tts
+    - vision
+    - web
+  telegram:
+    - skills
+    - lab-ops
+    - system-tools
+    - terminal
+    - kali-remote
+    - security-ops
+    - printer-tools
+    - terminal-ops
+    - ip-device-status
+    - qbittorrent
+    - samba-control
+    - manual-services
+    - ssh-file-transfer
+    - web
+    - tailnet-ops
+    - homeassistant
+    - hermy_hq
+    - network_presence
+    - composio-on-demand
+  discord:
+    - hermes-discord
+  whatsapp:
+    - hermes-whatsapp
+  slack:
+    - hermes-slack
+  signal:
+    - hermes-signal
+  homeassistant:
+    - hermes-homeassistant
+  qqbot:
+    - hermes-qqbot
+  yuanbao:
+    - hermes-yuanbao
+  teams: []
+  google_chat: []
+platforms:
+  telegram:
+    extra:
+      channel_prompts:
+        '5029489710': 'En Telegram responde siempre de forma concisa y directa en
+          español. Entrega primero la conclusión y la acción necesaria. Resume solo
+          lo más importante; usa como máximo 5 viñetas breves salvo que el usuario
+          pida detalle o la seguridad requiera explicarlo. No repitas la solicitud,
+          no narres cada paso ni incluyas texto de relleno. Si una tarea sigue ejecutándose,
+          informa solo del estado esencial y del siguiente hito.
+
+          '
+        '8968754596': 'En Telegram responde siempre de forma concisa y directa en
+          español. Entrega primero la conclusión y la acción necesaria. Resume solo
+          lo más importante; usa como máximo 5 viñetas breves salvo que el usuario
+          pida detalle o la seguridad requiera explicarlo. No repitas la solicitud,
+          no narres cada paso ni incluyas texto de relleno. Si una tarea sigue ejecutándose,
+          informa solo del estado esencial y del siguiente hito.
+
+          '
+      command_menu:
+        max_commands: 100
+        priority_mode: prepend
+        priority:
+          - pelicula
+          - alexa
+          - noticias_ecuador_hoy
+          - display_one
+          - reynaldo
+          - device_two
+          - codex
+          - codex_full
+          - apaga_device_two_laptop
+          - enciende_device_two_laptop
+          - remote-power-on
+          - remote-power-off
+          - remote-power-status
+          - estado_llm
+          - encender_llm
+          - apagar_llm
+          - guarda_esto
+          - encender-equipo
+          - apagar-equipo
+          - lab-wake
+          - lab-shutdown
+          - lab-status
+          - net-inventory
+          - term
+          - exec-safe
+          - qbittorrent
+          - descarga
+          - qbit-status
+          - impresora-status
+          - imprimir-archivo
+          - imprimir-texto
+          - descarga-media
+          - descarga-archivo
+          - descargas-status
+          - gopeed-status
+          - descargas-stop
+          - descargas-inicio
+          - run_qbittorrent
+          - stop_qbittorrent
+          - restart_qbittorrent
+          - status_qbittorrent
+          - run_samba
+          - stop_samba
+          - restart_samba
+          - status_samba
+          - run_pipewire_wireplumber
+          - stop_pipewire_wireplumber
+          - restart_pipewire_wireplumber
+          - status_pipewire_wireplumber
+          - run_avahi_daemon
+          - stop_avahi_daemon
+          - restart_avahi_daemon
+          - status_avahi_daemon
+          - run_rpcbind_nfs_blkmap
+          - stop_rpcbind_nfs_blkmap
+          - restart_rpcbind_nfs_blkmap
+          - status_rpcbind_nfs_blkmap
+          - mi_ip
+    home_channel:
+      platform: telegram
+      chat_id: '5029489710'
+      name: Reynaldo Rodriguez
+known_plugin_toolsets:
+  cli:
+    - a2a
+    - composio-on-demand
+    - hermy_hq
+    - memory
+    - network_presence
+    - spotify
+known_builtin_toolsets:
+  cli:
+    - browser
+    - clarify
+    - code_execution
+    - computer_use
+    - connections
+    - context_engine
+    - cronjob
+    - delegation
+    - discord
+    - discord_admin
+    - file
+    - homeassistant
+    - image_gen
+    - kanban
+    - memory
+    - session_search
+    - skills
+    - spotify
+    - stt
+    - terminal
+    - todo
+    - tts
+    - video
+    - video_gen
+    - vision
+    - web
+    - x_search
+    - yuanbao
+mcp_servers:
+  composio-full-access:
+    url: https://connect.composio.dev/mcp
+    headers:
+    connect_timeout: 60
+    timeout: 120
+    tools:
+      include: []
+
+# ── Security ──────────────────────────────────────────────────────────
+# to false to disable (e.g. when developing the redactor itself).
+# tirith pre-exec scanning is enabled by default when the tirith binary
+# is available. Configure via security.tirith_* keys or env vars
+# (TIRITH_ENABLED, TIRITH_BIN, TIRITH_TIMEOUT, TIRITH_FAIL_OPEN).
+#
+# security:
+#   tirith_enabled: true
+#   tirith_path: "tirith"
+#   tirith_timeout: 5
+#   tirith_fail_open: true
+
+# ── Fallback Model ────────────────────────────────────────────────────
+# Automatic provider failover when primary is unavailable.
+# Uncomment and configure to enable. Triggers on rate limits (429),
+# overload (529), service errors (503), or connection failures.
+#
+# Supported providers:
+#   openai-codex (OAuth — hermes auth) — OpenAI Codex
+#   nous         (OAuth — hermes auth) — Nous Portal
+#   bedrock      (AWS IAM / boto3)     — AWS Bedrock (Converse API)
+#
+# For custom OpenAI-compatible endpoints, add base_url and key_env.
+#
+# fallback_model:
+#   provider: openrouter
+#   model: anthropic/claude-sonnet-4

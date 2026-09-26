@@ -1,0 +1,12 @@
+name: composio-on-demand-router
+version: 2.0.0
+description: Catálogo y lectura de Composio Connect bajo demanda, con caché segura de 10 minutos.
+entrypoint: __init__.py
+provides_tools:
+  - integration_catalog
+  - integration_status
+  - composio_discover
+  - composio_read
+provides_hooks:
+  - pre_llm_call
+  - pre_tool_call

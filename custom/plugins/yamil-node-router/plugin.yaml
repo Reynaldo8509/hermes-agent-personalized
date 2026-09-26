@@ -1,0 +1,7 @@
+name: device_two-node-router
+version: 1.0.0
+description: Laptop-device_two bajo demanda por Tailscale, con ejecución de usuario restringida.
+entrypoint: __init__.py
+provides_tools:
+  - device_two_node_status
+  - device_two_node_task

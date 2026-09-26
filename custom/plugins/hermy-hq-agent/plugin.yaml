@@ -1,0 +1,45 @@
+name: hermy-hq-agent
+version: 1.0.0
+description: Consulta estados de agentes de Hermy HQ y delega tareas a Max desde Hermes.
+entrypoint: __init__.py
+provides_tools:
+- hermy_agent_status
+- hermy_delegate_to_max
+- hermes_runtime_status
+provides_hooks:
+- pre_gateway_dispatch
+- pre_llm_call
+- pre_tool_call
+provides_commands:
+- pause_max
+- pause-max
+- pause_codex
+- pause-codex
+- pause_atlas
+- pause-atlas
+- pause_aegis
+- pause-aegis
+- pause_pulse
+- pause-pulse
+- pause_ledger
+- pause-ledger
+- pause_domus
+- pause-domus
+- pause_milo
+- pause-milo
+- resume_max
+- resume-max
+- resume_codex
+- resume-codex
+- resume_atlas
+- resume-atlas
+- resume_aegis
+- resume-aegis
+- resume_pulse
+- resume-pulse
+- resume_ledger
+- resume-ledger
+- resume_domus
+- resume-domus
+- resume_milo
+- resume-milo

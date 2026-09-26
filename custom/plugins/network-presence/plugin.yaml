@@ -1,0 +1,7 @@
+name: network-presence
+version: 1.0.0
+description: Consulta la última ubicación y red reportada por los dispositivos móviles al receptor privado de Hermes.
+entrypoint: __init__.py
+provides_tools:
+  - hermes_network_presence
+provides_hooks: []

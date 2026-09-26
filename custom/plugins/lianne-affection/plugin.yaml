@@ -1,0 +1,7 @@
+name: display_one-affection
+version: "1.0.0"
+description: "Añade una frase afectuosa ocasional únicamente a las respuestas de display_one."
+entrypoint: __init__.py
+provides_hooks:
+  - pre_llm_call
+  - transform_llm_output

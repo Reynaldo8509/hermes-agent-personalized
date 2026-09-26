@@ -1,0 +1,11 @@
+[Unit]
+Description=Weekly staged Hermes update check
+
+[Timer]
+OnCalendar=*-*-* 03:30:00 America/Guayaquil
+Persistent=true
+RandomizedDelaySec=15m
+Unit=hermes-vps-updater.service
+
+[Install]
+WantedBy=timers.target

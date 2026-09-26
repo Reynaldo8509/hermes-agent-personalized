@@ -1,0 +1,7 @@
+name: tmdb-catalog
+version: 1.0.0
+description: Consulta el catálogo TMDB Popular Movies persistido por número e informe
+entrypoint: __init__.py
+provides_commands:
+  - pelicula
+provides_hooks: []

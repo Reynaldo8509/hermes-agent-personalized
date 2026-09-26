@@ -1,0 +1,21 @@
+[Unit]
+Description=Hermes network presence ingest (example for %i)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=%h/hermes/custom/network-ingest
+EnvironmentFile=-%h/.config/hermes/network-ingest.env
+Environment=HERMES_NETWORK_INGEST_STATE_DIR=%h/.local/state/hermes-network-ingest
+ExecStart=/usr/bin/python3 %h/hermes/custom/network-ingest/app.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.local/state/hermes-network-ingest
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,26 @@
+node_id: toshiba-p50-kali
+transport: tailscale
+endpoint: 192.0.2.10
+ssh_user: example-user
+ssh_key: $HOME/.ssh/id_ed25519_hermes_toshiba_node
+known_hosts: $HOME/.ssh/known_hosts
+runner: $HOME/.local/bin/hermes-node-runner
+capabilities:
+  - bash
+  - python
+  - kali
+  - networking
+  - file-read
+  - file-write
+  - nmap
+  - tshark
+  - tcpdump
+  - netcat
+  - ss
+  - iproute2
+  - dns
+  - traceroute
+  - arp-scan
+  - curl
+  - openssl
+  - exec-user

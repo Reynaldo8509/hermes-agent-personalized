@@ -1,0 +1,27 @@
+[Unit]
+Description=Hermes Agent VPS isolated instance
+After=network-online.target tailscaled.service
+Wants=network-online.target tailscaled.service
+
+[Service]
+Type=simple
+User=example-user
+Group=example-user
+WorkingDirectory=$HOME/hermes
+Environment=HOME=$HOME
+Environment=HERMES_HOME=$HOME/hermes
+Environment=PATH=$HOME/hermes/node/bin:$HOME/hermes/app/venv/bin:$HOME/hermes/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+EnvironmentFile=-$HOME/hermes/.env
+EnvironmentFile=-$HOME/hermes/integrations-vps.env
+ExecStart=$HOME/hermes/app/venv/bin/python -m hermes_cli.main serve --host 192.0.2.10 --port 9219 --skip-build
+Restart=on-failure
+RestartSec=10
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=false
+ReadWritePaths=$HOME/hermes
+
+[Install]
+WantedBy=multi-user.target

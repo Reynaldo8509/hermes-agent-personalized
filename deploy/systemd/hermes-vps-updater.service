@@ -1,0 +1,13 @@
+[Unit]
+Description=Stage, validate and apply safe Hermes updates from Nous Research
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=example-user
+Group=example-user
+ExecStart=$HOME/hermes/bin/hermes-vps-updater.sh
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=$HOME/hermes "$HOME/Pruebas y Verificaciones" "$HOME/Local Backups" $HOME/.cache

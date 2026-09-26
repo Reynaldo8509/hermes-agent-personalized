@@ -1,0 +1,9 @@
+{
+  "name": "VIDEO2IMPLEMENTATION_Gemini_Prompt_Maestro_v3.md",
+  "version": "v3",
+  "sha256": "968b7baae04fb338c6bd237128977894de7a4403a191f3f70ea1749def8d6894",
+  "source": "REY-provided local Markdown",
+  "loaded_by": "Pulse-side VIDEO2IMPLEMENTATION preparation only",
+  "max_allowed_use": "prompt configuration; never execute as code",
+  "external_call_enabled": false
+}

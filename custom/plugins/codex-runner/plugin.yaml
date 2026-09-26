@@ -1,0 +1,10 @@
+name: codex-runner
+version: 0.1.1
+description: Invocacion explicita de Codex CLI desde Hermes
+entrypoint: __init__.py
+provides_commands:
+  - display_one
+  - reynaldo
+  - device_two
+  - codex_full
+  - codex

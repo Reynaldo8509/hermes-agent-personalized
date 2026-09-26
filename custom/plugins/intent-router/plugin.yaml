@@ -1,0 +1,7 @@
+name: intent-router
+version: 1.0.0
+description: Clasifica consultas informativas antes del LLM y evita herramientas innecesarias.
+entrypoint: __init__.py
+provides_hooks:
+  - pre_llm_call
+  - pre_tool_call

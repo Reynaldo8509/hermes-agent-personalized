@@ -1,0 +1,9 @@
+name: printer-control
+version: 1.0.0
+description: Control de impresion mediante CUPS e IPP
+entrypoint: __init__.py
+provides_commands:
+  - impresora-status
+  - imprimir-archivo
+  - imprimir-texto
+provides_hooks: []

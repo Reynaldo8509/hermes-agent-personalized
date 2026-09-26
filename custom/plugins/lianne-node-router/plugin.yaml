@@ -1,0 +1,10 @@
+name: display_one-node-router
+version: 1.0.0
+description: PC de display_one bajo demanda por Tailscale, subordinada a MAX/Hermes.
+entrypoint: __init__.py
+provides_tools:
+  - display_one_node_status
+  - display_one_node_task
+provides_commands:
+  - display_one_pc_descargar_video
+  - display_one-pc-descargar-video

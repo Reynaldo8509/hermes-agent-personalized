@@ -1,0 +1,7 @@
+name: raspberry-node-router
+version: 1.0.0
+description: RaspberryPi4 bajo demanda por Tailscale, preservando exit node y proxy inverso.
+entrypoint: __init__.py
+provides_tools:
+  - raspberry_node_status
+  - raspberry_node_task

@@ -1,0 +1,15 @@
+name: qbittorrent-control
+version: 2.1.0
+description: Control unificado de descargas qBittorrent y Gopeed con selección segura de un único archivo
+entrypoint: __init__.py
+provides_tools:
+  - torrent_search_download
+provides_commands:
+  - descarga
+  - descarga-media
+  - descarga-archivo
+  - descargas-status
+  - gopeed-status
+  - descargas-stop
+  - descargas-inicio
+provides_hooks: []
