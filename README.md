@@ -2,18 +2,11 @@
 
 ![Banner amarillo oficial de Hermes Agent](docs/assets/hermes-agent-banner.png)
 
+<img width="1329" height="801" alt="Hermes Agent CLI" src="https://github.com/user-attachments/assets/151d9e39-9f67-4bfb-9f95-f9e99e330b7b" />
+<img width="1913" height="975" alt="Hermes Agent Desktop" src="https://github.com/user-attachments/assets/dffebbc6-6604-4524-9bd0-2290e562908d" />
+
+
 <sub>Banner del proyecto Hermes Agent, distribuido con el código fuente de [Nous Research](https://github.com/NousResearch/hermes-agent). La marca y el diseño pertenecen a sus titulares.</sub>
-
-
-## Presentación de Hermes Agent
-
-Estas capturas muestran las dos interfaces de Hermes Agent incluidas en este despliegue personalizado:
-
-<p align="center">
-  <img src="docs/assets/hermes-agent-desktop.png" alt="Interfaz Desktop de Hermes Agent" width="48%">
-  <img src="docs/assets/hermes-agent-cli.png" alt="Interfaz CLI de Hermes Agent" width="48%">
-</p>
-<p align="center"><sub>Hermes Agent Desktop · Hermes Agent CLI</sub></p>
 
 Repositorio público del despliegue de Hermes Agent que se ejecuta en un VPS, publicado desde el estado activo del servidor. Contiene el código fuente completo versionado de Hermes Agent, las personalizaciones locales activas, plugins propios y ejemplos portables de configuración e instalación.
 
