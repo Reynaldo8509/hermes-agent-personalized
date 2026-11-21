@@ -116,7 +116,7 @@ Las flechas representan relaciones de arquitectura, **no validación E2E de cada
 - [Hermes upstream — Nous Research](https://github.com/NousResearch/hermes-agent)
 - [Hermy HQ personalizado](https://github.com/Reynaldo8509/hermy-hq-personalized)
 - [Home Assistant personalizado](https://github.com/Reynaldo8509/home-assistant-personalized)
-- [Guía de despliegue del repositorio](DEPLOYMENT.md) 
+- [Guía de despliegue del repositorio](DEPLOYMENT.md)
 - [Política de publicación segura](../SECURITY.md)
 
 Este material es documentación de portafolio y un snapshot técnico sanitizado. **No permite reproducir el entorno personal exacto ni restaurar su estado privado.**
