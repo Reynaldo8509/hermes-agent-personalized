@@ -33,3 +33,18 @@ Hermes recibe mensajes a través del gateway de Telegram. Los comandos disponibl
 ## Revisión de privacidad
 
 Antes de instalar, repón nombres, IDs, rutas y direcciones ficticias por valores de tu instalación. Añade secretos mediante el mecanismo local de Hermes y Home Assistant. Nunca subas volcados, conversaciones, archivos de credenciales ni directorios de perfil.
+
+### Destinos de qBittorrent
+
+El plugin de control usa `~/Videos` y `~/Downloads` como destinos de ejemplo. Si el servidor qBittorrent accede a otros montajes, añade ajustes locales al `config.yaml` de Hermes:
+
+```yaml
+plugins:
+  entries:
+    qbittorrent-control:
+      settings:
+        media_path: /srv/media
+        downloads_path: /srv/downloads
+```
+
+Sustituye `/srv/media` y `/srv/downloads` por rutas que el proceso qBittorrent pueda ver. No publiques rutas privadas del host ni valores de producción.

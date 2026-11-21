@@ -40,6 +40,19 @@ class DownloadCommandTests(unittest.TestCase):
     def setUp(self):
         self.plugin = load_plugin()
 
+    def test_download_paths_use_generic_defaults(self):
+        self.plugin.register(FakeContext())
+        self.assertTrue(self.plugin.MEDIA_PATH.endswith("/Videos"))
+        self.assertTrue(self.plugin.FILES_PATH.endswith("/Downloads"))
+
+    def test_download_paths_can_use_plugin_settings(self):
+        context = FakeContext()
+        settings = {"media_path": "/srv/media", "downloads_path": "/srv/downloads"}
+        context.get_config = lambda key, default: settings.get(key, default)
+        self.plugin.register(context)
+        self.assertEqual(self.plugin.MEDIA_PATH, "/srv/media")
+        self.assertEqual(self.plugin.FILES_PATH, "/srv/downloads")
+
     def test_name_request_routes_once_to_smart_tool(self):
         self.plugin._torrent_search_download = Mock(return_value="smart-result")
         result = self.plugin._media_command(

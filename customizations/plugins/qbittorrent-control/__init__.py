@@ -31,9 +31,18 @@ def _reset_operation_cancellation_event(token):
     _torrent_search_module.reset_operation_cancellation_event(token)
 
 MEDIA_RE = re.compile(r"\.(?:mp4|mkv|avi|mov|webm|m4v|mp3|flac|wav|aac|ogg|jpg|jpeg|png|gif|srt|vtt)(?:[?#].*)?$", re.I)
-MEDIA_PATH = "/mnt/raspberrypi4-ssd/media"
-FILES_PATH = "/mnt/raspberrypi4-ssd/Descargas"
+MEDIA_PATH = os.path.expanduser("~/Videos")
+FILES_PATH = os.path.expanduser("~/Downloads")
 BTIH_RE = re.compile(r"^(?:[0-9a-f]{40}|[a-z2-7]{32})$", re.I)
+
+def _configured_path(ctx, key, default):
+    try:
+        value = ctx.get_config(key, default)
+    except (AttributeError, TypeError, ValueError):
+        value = default
+    if not isinstance(value, str) or not value.strip():
+        value = default
+    return os.path.expanduser(value.strip())
 
 def _run(coro):
     try: asyncio.get_running_loop()
@@ -340,6 +349,9 @@ def _torrent_search_download(args):
     return json.dumps(_execute_torrent_search(_q_req, args or {}), ensure_ascii=False, separators=(",", ":"))
 
 def register(ctx):
+    global MEDIA_PATH, FILES_PATH
+    MEDIA_PATH = _configured_path(ctx, "media_path", MEDIA_PATH)
+    FILES_PATH = _configured_path(ctx, "downloads_path", FILES_PATH)
     ctx.register_tool(
         name="torrent_search_download",
         toolset="qbittorrent",

@@ -1,71 +1,84 @@
-# Hermes Agent Personalizado
+# Hermes Agent personalizado
 
-![Banner amarillo oficial de Hermes Agent](docs/assets/hermes-agent-banner.png)
+![Banner de Hermes Agent, distribuido con el código de Nous Research](docs/assets/hermes-agent-banner.png)
 
 <img width="1329" height="801" alt="Hermes Agent CLI" src="https://github.com/user-attachments/assets/151d9e39-9f67-4bfb-9f95-f9e99e330b7b" />
 <img width="1913" height="975" alt="Hermes Agent Desktop" src="https://github.com/user-attachments/assets/dffebbc6-6604-4524-9bd0-2290e562908d" />
 
+<sub>Hermes Agent es un proyecto de Nous Research. La marca, el banner y el diseño pertenecen a sus titulares.</sub>
 
-<sub>Banner del proyecto Hermes Agent, distribuido con el código fuente de [Nous Research](https://github.com/NousResearch/hermes-agent). La marca y el diseño pertenecen a sus titulares.</sub>
+Este repositorio presenta un snapshot público y filtrado de **Hermes Agent personalizado**: el agente de código abierto de [Nous Research](https://github.com/NousResearch/hermes-agent), ampliado con plugins e integraciones desarrollados para el entorno de REY. La documentación separa las funciones upstream de las personalizaciones y señala qué se observó, qué se probó y qué permanece sin validar.
 
-Repositorio público de una instalación extendida de **Hermes Agent**, desarrollado originalmente por **Nous Research**, con personalizaciones de REY para automatización, integración de herramientas y coordinación con Hermy HQ. Reúne un snapshot de código y personalizaciones publicables; **no contiene todos los módulos privados ni constituye una copia íntegra y reproducible del VPS**. La versión/tag upstream exactos del runtime productivo no pudieron verificarse en la auditoría del 20 de noviembre de 2026.
+El snapshot no es una exportación completa ni reproducible del VPS. Excluye datos de runtime, credenciales, conversaciones, bases de datos y configuraciones privadas. La auditoría del 20 de noviembre de 2026 no pudo asociar el árbol productivo a un tag o commit upstream exacto. Las correcciones locales posteriores de dependencias se conservan fuera de esta publicación y **no fueron desplegadas en producción**.
 
-## Mapa visual de la integración
+![Mapa visual del ecosistema de agentes e integraciones](docs/assets/ai-architecture-map.png)
 
-![Ilustración generada con IA del ecosistema de agentes, controles y hogar conectado](docs/assets/ai-architecture-map.png)
+## Hermes Agent de Nous Research
 
-La ilustración resume visualmente el ecosistema. El diagrama Mermaid y las secciones siguientes describen los flujos implementados con etiquetas precisas.
+El proyecto original aporta el runtime y sus interfaces: CLI, Gateway, WebUI y Desktop; sesiones, memoria y Wiki; herramientas, skills y plugins; navegación y automatización; subagentes, integraciones MCP y proveedores de modelos; además de mecanismos de gestión y compresión del contexto. Estas capacidades pertenecen a Nous Research, no a las personalizaciones de REY.
 
-## Qué incluye
+Consulta el [repositorio upstream](https://github.com/NousResearch/hermes-agent) y su [documentación oficial](https://hermes-agent.nousresearch.com/docs/).
 
-- Árbol del proyecto Hermes Agent (rama activa exportada como un commit nuevo, sin historial previo).
-- Plugins propios para Alexa, presencia en red, enrutamiento, protecciones de herramientas, Hermy HQ, QBitTorrent y servicios personalizados.
-- Las dos modificaciones locales activas del gateway y su prueba asociada.
-- Ejemplos de configuración y unidades de servicio, revisados para publicar sin credenciales.
-- Una comprobación de GitHub Actions adaptada a este repositorio: valida imágenes enlazadas y detecta archivos de entorno, bases de datos, logs y cachés de runtime.
-- Integración conceptual con Hermy HQ y Home Assistant; ADB para control de Fire TV se documenta y se comparte en el repositorio de Home Assistant.
+## Aportes y estado observado
 
-## Capacidades y estado verificado (20 de noviembre de 2026)
+La auditoría registró 42 elementos. En ese corte, 7 se verificaron dentro de un alcance limitado, 25 estaban implementados sin validación E2E, 5 eran parciales, 4 estaban inactivos y 1 no se encontró. Los estados no describen disponibilidad actual y no equivalen a una certificación.
 
-La auditoría realizada desde la Dell G15 documentó **42 elementos evaluados**: 7 verificados dentro de pruebas acotadas, 25 implementados sin prueba E2E, 5 parciales, 4 inactivos y 1 no encontrado. Se identificaron **20 plugins propios habilitados** en el inventario de configuración, sin que ello demuestre 20 flujos operativos de extremo a extremo.
+| Área | Aporte de REY | Estado y límite de la evidencia |
+|---|---|---|
+| Coordinación multiagente | Integración con Hermy HQ, su Bridge y ocho roles especialistas | Catálogo y componentes presentes; no se acreditó la ejecución E2E de cada agente. |
+| Composio y MCP | Router bajo demanda con descubrimiento de herramientas y ruta de lectura | Configurado; no se hicieron consultas externas durante la auditoría. |
+| Telemetría | Plugin local que conserva metadatos de uso y evita persistir mensajes y argumentos | Código y plugin habilitados; exportación completa no probada. |
+| Herramientas | Research gate y guardrails para llamadas de herramientas | Código presente; sin validación E2E ni certificación de seguridad. |
+| Multimedia | Búsqueda y control de qBittorrent, Gopeed y flujo de selección | 72 pruebas aisladas aprobadas; no se inició una descarga real. |
+| Presencia e impresión | Referencias a plugins de presencia e impresión en el catálogo observado | No se probó su ejecución E2E; los módulos de dispositivo se mantienen fuera de este snapshot. |
+| Video2Implementation | Flujo relacionado con videos de YouTube y Gemini | Parcial; Gemini estaba deshabilitado en el corte. |
+| Weekly Movies | Catálogo y automatización asociados con TMDB | Timer y artefactos observados; la entrega no se verificó. |
+| Comunicación | Telegram mediante Gateway y soporte configurado para WhatsApp | No se enviaron mensajes de prueba. |
+| Productividad | Job-Apply, preparación/selección de CV y conexión prevista con Google Calendar | El worker Job-Apply tenía un timer activo, pero no se verificó ninguna postulación; Calendar era parcial. |
+| Hogar y dispositivos | Integraciones configuradas para Home Assistant, Alexa y Fire TV/ADB | No se ejecutaron controles; componentes ligados a dispositivos privados se excluyeron del snapshot. |
+| Operación | Nodos subordinados, supervisión, respaldos, heartbeat y tareas programadas | Se observaron componentes y timers; recuperación, cobertura e2e y continuidad no quedaron acreditadas. |
+| Modelos | Routing local/remoto con políticas y fallbacks configurados | Qwen respondió a una comprobación de salud HTTP 200; no se hizo inferencia. Otros proveedores no se llamaron. |
 
-En el despliegue se observaron configuraciones o código para Telegram, soporte WhatsApp, Composio/MCP, qBittorrent/Gopeed, TMDB, Video2Implementation/YouTube, Job-Apply/CV, Home Assistant/Alexa/Fire TV, nodos subordinados, supervisión, memoria, copias de seguridad y políticas de modelos. No todas esas integraciones están activas, publicadas o validadas en producción.
-
-**Pruebas acotadas:** qBittorrent 72/72; WebUI y endpoint de salud Qwen HTTP 200. La comprobación de salud de Qwen no demuestra inferencia; tampoco se acreditaron E2E de Telegram, WhatsApp, calendario, postulaciones, restauración de backups ni control de dispositivos durante esta auditoría.
-
-- **[Inventario de funcionalidades, estados y limitaciones](docs/CAPABILITIES-2026-11-20.md)**: distinción entre herramientas nativas de Nous Research y desarrollos de REY.
-- **[Hermy HQ y sus ocho agentes configurados](https://github.com/Reynaldo8509/hermy-hq-personalized/blob/sync/hermy-hq-20261120/docs/AGENTS-STATUS-2026-11-20.md)**: capacidades, coordinación y limitaciones.
-- **[Sincronización de código para revisión (PR #1)](https://github.com/Reynaldo8509/hermes-agent-personalized/pull/1)**: cinco plugins genéricos añadidos en `customizations/plugins/`, sin hacer merge a `main`.
-
-Las integraciones no publicadas por contener información de dispositivos, identidad o credenciales se documentan solamente a nivel funcional.
+El inventario completo, los 42 estados y sus evidencias están en **[Capacidades y estado técnico](docs/CAPABILITIES-2026-11-20.md)**. Los cinco plugins adicionales publicados en `customizations/plugins/` son el router Composio, telemetría, control qBittorrent, research gate y tool-call guardrails. El snapshot también conserva personalizaciones anteriores en `custom/plugins/`; no todos los componentes presentes en producción se publican. Los destinos de descarga por defecto son `~/Videos` y `~/Downloads`; se configuran para el filesystem visible para qBittorrent mediante los ajustes del plugin descritos en la guía de despliegue.
 
 ## Arquitectura
 
 ```mermaid
 flowchart LR
-  U[Usuario] --> TG[Telegram / Hermes Gateway]
+  U[Operador] --> TG[Telegram / Hermes Gateway]
+  U --> WEB[Hermes WebUI]
   TG --> H[Hermes Agent en VPS]
-  H --> P[Plugins locales]
-  P --> HQ[Hermy HQ: estado y coordinación]
-  P --> HA[Home Assistant API]
-  HA --> AL[Alexa / escenas y automatizaciones]
-  HA --> ADB[ADB hacia Fire TV]
-  H --> LLM[Proveedor LLM configurado localmente]
+  WEB --> H
+  H --> PL[Plugins y herramientas]
+  H --> MR[Políticas y routing de modelos]
+  PL --> EXT[Composio/MCP, qBittorrent/Gopeed y servicios configurados]
+  H <--> BR[Hermy Bridge]
+  BR <--> HQ[Hermy HQ]
+  HQ --> AG[MAX · ATLAS · CODEX · AEGIS · LEDGER · MILO · DOMUS · PULSE]
+  MR --> Q[Qwen local · health comprobado]
+  MR --> FREE[Proveedores remotos configurados · no invocados]
 ```
 
-El diagrama describe las integraciones configuradas en este despliegue; los proveedores y endpoints se configuran en el servidor. No hay tokens ni direcciones privadas en este repo.
+El diagrama resume componentes y relaciones encontradas, no confirma cada conexión extremo a extremo. La configuración efectiva y las direcciones privadas no se publican. La administración de GitHub se realizó desde la Dell; Hermes y Hermy HQ productivos permanecen en el VPS.
 
-## Proyectos relacionados
+## Modelos y control de costes
 
-- [Home Assistant Personalized](https://github.com/Reynaldo8509/home-assistant-personalized)
-- [Hermy HQ Personalized](https://github.com/Reynaldo8509/hermy-hq-personalized)
+Qwen local respondió al endpoint de salud, pero no se generó una respuesta de modelo. TokenHarbor/DeepSeek, OpenRouter, Groq, Cerebras y FreeLLMAPI aparecían configurados en rutas o referencias; no se comprobó su disponibilidad mediante llamadas. Las rutas gratuitas dependen de cuotas y condiciones del proveedor y no garantizan coste cero. La auditoría no reconcilió costes reales.
 
-## Inicio
+## Canales, aprobaciones y límites
 
-Consulta `docs/DEPLOYMENT.md` para dependencias, instalación del código y plugins, configuración local y comprobaciones de operación. `custom/plugins/` conserva las personalizaciones del snapshot inicial; `customizations/plugins/` contiene cinco plugins genéricos adicionales publicados en la rama de sincronización, no la totalidad de los plugins activos del VPS.
+Telegram y WebUI forman parte del despliegue observado; la WebUI respondió al health check y su API rechazó solicitudes sin autenticación. No se mandaron mensajes a Telegram o WhatsApp ni se validó un ciclo completo de interacción. En Hermy HQ, `AUTOAPPROVAL_ENABLED=false` en el corte auditado; esto no certifica todas las rutas de autorización. El inventario documenta las limitaciones de Action Center, scheduler y agentes.
 
-## Seguridad y alcance
+No se verificaron E2E el correo MILO, Google Calendar, postulaciones, restauración de backups, control de hogar o Fire TV, ni cada ruta de proveedores. El estado de cada uno se presenta en el inventario con la evidencia disponible.
 
-No se publican archivos `.env`, claves, secretos, historiales de conversación, estados de agentes, bases de datos, cachés, credenciales OAuth ni configuración privada. Los servicios de producción continúan instalados en el VPS. Este repositorio no restaura datos de runtime. Revisa `SECURITY.md` antes de aportar cambios.
+## Publicación, configuración y seguridad
 
-El código base conserva sus avisos y licencia originales. Las personalizaciones se publican como documentación de portafolio y ejemplos de integración.
+- [Inventario de Hermes: funciones, estados, arquitectura y evidencia](docs/CAPABILITIES-2026-11-20.md)
+- [Hermy HQ: agentes y estado auditado](https://github.com/Reynaldo8509/hermy-hq-personalized/blob/main/docs/AGENTS-STATUS-2026-11-20.md)
+- [Guía de despliegue y configuración](docs/DEPLOYMENT.md)
+- [Política de seguridad](SECURITY.md)
+- [Home Assistant personalizado](https://github.com/Reynaldo8509/home-assistant-personalized)
+
+Los ejemplos deben configurarse con credenciales propias y servicios aislados. No publiques archivos `.env` reales, sesiones, claves, historial de conversación, datos personales, bases de datos, respaldos o configuración privada. La publicación conserva avisos y licencias upstream; atribuye a Nous Research el proyecto original y a terceros sus respectivos componentes.
+
+El workflow del repositorio valida artefactos de publicación y escanea las líneas añadidas para patrones comunes de credenciales. Este control reduce errores de publicación, pero no sustituye una revisión de privacidad ni una auditoría de seguridad.
