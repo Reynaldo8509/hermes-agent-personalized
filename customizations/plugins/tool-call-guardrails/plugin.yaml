@@ -1,0 +1,8 @@
+name: tool-call-guardrails
+version: 1.0.0
+description: Validación, separación terminal-herramientas y límites de recuperación.
+entrypoint: __init__.py
+provides_hooks:
+  - pre_llm_call
+  - pre_tool_call
+  - post_tool_call

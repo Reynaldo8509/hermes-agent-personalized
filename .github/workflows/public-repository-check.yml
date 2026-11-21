@@ -24,3 +24,12 @@ jobs:
           fetch-depth: 1
       - name: Check publication files
         run: python3 scripts/check-publication.py
+      - name: Scan added lines for hardcoded credentials
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before || github.sha }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          if [ "$BASE_SHA" != "$HEAD_SHA" ]; then
+            git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          fi
+          python3 scripts/check-public-secrets.py "$BASE_SHA" "$HEAD_SHA"

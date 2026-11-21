@@ -1,0 +1,9 @@
+name: research-gate
+version: 1.0.0
+description: Investigación web limitada, filtrada y sin memoria automática
+entrypoint: __init__.py
+provides_hooks:
+  - pre_llm_call
+  - pre_tool_call
+  - transform_tool_result
+provides_commands: []
