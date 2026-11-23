@@ -120,3 +120,7 @@ Las flechas representan relaciones de arquitectura, **no validación E2E de cada
 - [Política de publicación segura](../SECURITY.md)
 
 Este material es documentación de portafolio y un snapshot técnico sanitizado. **No permite reproducir el entorno personal exacto ni restaurar su estado privado.**
+
+## 8. Skill propia incluida en este snapshot
+
+`customizations/skills/defensive-incident-response/SKILL.md` es una guía de autoría REY para el triaje defensivo de incidentes en sistemas autorizados. Estado: **IMPLEMENTED_NOT_E2E_VERIFIED**. La publicación verifica el contenido y sus metadatos, pero no demuestra su ejecución como flujo automatizado de respuesta ni sustituye los procesos de incident response del entorno. La lista de otros skills locales revisados y los motivos para excluirlos está en [`customizations/skills/README.md`](../customizations/skills/README.md).
