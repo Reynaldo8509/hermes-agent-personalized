@@ -41,6 +41,8 @@ La auditoría registró 42 elementos. En ese corte, 7 se verificaron dentro de u
 
 El inventario completo, los 42 estados y sus evidencias están en **[Capacidades y estado técnico](docs/CAPABILITIES-2026-11-20.md)**. Los cinco plugins adicionales publicados en `customizations/plugins/` son el router Composio, telemetría, control qBittorrent, research gate y tool-call guardrails. El snapshot también conserva personalizaciones anteriores en `custom/plugins/`; no todos los componentes presentes en producción se publican. Los destinos de descarga por defecto son `~/Videos` y `~/Downloads`; se configuran para el filesystem visible para qBittorrent mediante los ajustes del plugin descritos en la guía de despliegue.
 
+El snapshot también publica una skill propia de respuesta defensiva a incidentes, junto con su licencia y una prueba de formato. Es una guía operativa para análisis autorizado; no es un playbook automatizado ni una integración SOC validada E2E. El índice explica por qué otras skills locales con procedencia, licencia o integraciones privadas no se incluyen: **[Skills publicadas y alcance](customizations/skills/README.md)**.
+
 ## Arquitectura
 
 ```mermaid
